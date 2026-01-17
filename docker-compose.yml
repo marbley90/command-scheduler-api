@@ -1,5 +1,31 @@
 services:
   redis:
     image: redis:7-alpine
+    container_name: command-scheduler-redis
     ports:
       - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 1s
+      retries: 30
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: command-scheduler-api
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      REDIS_URL: redis://redis:6379
+      SQLITE_DB_PATH: /app/data/db.sqlite
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      - sqlite-data:/app/data
+
+volumes:
+  sqlite-data:

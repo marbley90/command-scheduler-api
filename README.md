@@ -111,7 +111,3 @@ Tests run with an in-memory SQLite database and a mocked Redis client.
   - `UPDATE ... WHERE id = ? AND status = 'PENDING'`
   - if the update affects 0 rows, we retry
 
-## AI usage disclosure (template)
-- Prompts used: (fill in)
-- Accepted: (fill in)
-- Rejected: (fill in)
