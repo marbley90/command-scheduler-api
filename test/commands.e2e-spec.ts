@@ -47,7 +47,7 @@ describe('Command Scheduler API (e2e)', () => {
     const completed = await request(app.getHttpServer())
       .post(`/commands/${scheduled.body.commandId}/complete`)
       .send({ status: 'SUCCEEDED', output: { durationMs: 12 } })
-      .expect(200);
+      .expect(201);
 
     expect(completed.body.commandId).toBe(scheduled.body.commandId);
     expect(completed.body.status).toBe('SUCCEEDED');
